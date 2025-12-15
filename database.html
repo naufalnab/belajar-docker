@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akses Database dengan DBeaver - Belajar Docker</title>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        /* Style khusus halaman ini */
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(255,255,255,0.5);
+        }
+        .back-link:hover { border-bottom-style: solid; }
+        
+        .alert-box {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #ffeeba;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Koneksi Database</h1>
+        <p>Cara menghubungkan DBeaver ke PostgreSQL yang berjalan di dalam Docker Container.</p>
+        <a href="index.html" class="back-link">← Kembali ke Halaman Utama</a>
+    </header>
+
+    <div class="container">
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <div class="step-title">Expose Port Database</div>
+            </div>
+            <div class="step-content">
+                <div class="alert-box">
+                    <strong>Penting:</strong> Secara default, database di Docker terkunci. Kita harus membuka "pintu" (port forwarding) terlebih dahulu.
+                </div>
+                <p class="step-description">
+                    Edit file <code>docker-compose.yml</code> dan tambahkan konfigurasi <code>ports</code> pada service <code>db</code>. Ini akan memetakan port internal container ke port MacBook kita.
+                </p>
+                <div style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 8px; font-family: monospace; overflow-x: auto;">
+                    db:<br>
+                    &nbsp;&nbsp;image: postgres:15<br>
+                    &nbsp;&nbsp;ports:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;- "5432:5432"  &lt;!-- Default Port --&gt;<br>
+                    ...
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+                    *Jika port 5432 gagal/bentrok, lihat <strong>Langkah 6</strong> di bawah.
+                </p>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <div class="step-title">Buat Koneksi Baru di DBeaver</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Buka aplikasi DBeaver, klik icon <strong>"New Database Connection"</strong> (ikon steker listrik di pojok kiri atas), lalu pilih <strong>PostgreSQL</strong> dan klik Next.
+                </p>
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <img src="assets/images/dbeaver-select-postgres.png" alt="Pilih PostgreSQL" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <div class="step-title">Input Kredensial</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Masukkan detail koneksi sesuai konfigurasi Docker kita:
+                </p>
+                <ul style="margin-left: 20px; margin-bottom: 20px; color: #444;">
+                    <li><strong>Host:</strong> localhost</li>
+                    <li><strong>Port:</strong> 5432 (atau 5433/5434 jika diubah)</li>
+                    <li><strong>Database:</strong> postgres (atau nama DB spesifik)</li>
+                    <li><strong>Username:</strong> odoo</li>
+                    <li><strong>Password:</strong> odoo</li>
+                </ul>
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <img src="assets/images/dbeaver-credentials.png" alt="Input Kredensial" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <div class="step-title">Test Connection & Finish</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Klik tombol <strong>"Test Connection ..."</strong>. Jika muncul pesan <em>"Connected"</em>, klik <strong>Finish</strong>.
+                </p>
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <img src="assets/images/dbeaver-success.png" alt="Koneksi Berhasil" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <div class="step-title">Verifikasi & Troubleshooting Database</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Jika database hasil restore (misal: <code>amdione-qa</code>) tidak muncul di DBeaver, lakukan langkah berikut:
+                </p>
+
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px;">A. Cek Kebenaran via Terminal</h4>
+                    <p style="font-size: 0.9rem; margin-bottom: 10px;">Pastikan database benar-benar ada secara fisik dengan bertanya langsung ke Docker:</p>
+                    <pre style="background: #2d2d2d; color: #f8f8f2; padding: 10px; border-radius: 6px; font-size: 0.8rem; overflow-x: auto;"><code>docker compose exec db psql -U odoo -l</code></pre>
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 5px;">Jika nama database muncul di list, berarti database <strong>ADA</strong>.</p>
+                </div>
+
+                <div>
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px;">B. Munculkan di DBeaver</h4>
+                    <p style="font-size: 0.9rem;">
+                        Agar DBeaver mau menampilkan semua database (bukan hanya default):
+                        <ol style="margin-left: 20px; margin-top: 5px;">
+                            <li>Klik Kanan koneksi > <strong>Edit Connection</strong>.</li>
+                            <li>Pilih tab <strong>PostgreSQL</strong>.</li>
+                            <li>Centang <strong>"Show all databases"</strong>.</li>
+                            <li>Disconnect & Reconnect.</li>
+                        </ol>
+                    </p>
+                </div>
+                
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <img src="assets/images/dbeaver-refresh-db.png" alt="Setting DBeaver" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <div class="step-title">Masalah: "Address already in use"?</div>
+            </div>
+            <div class="step-content">
+                <div class="alert-box" style="background-color: #f8d7da; color: #721c24; border-left-color: #f5c6cb;">
+                    <strong>Error Docker:</strong> Jika muncul error <em>"Bind: address already in use"</em> saat menjalankan Docker, berarti port yang kita pilih (5432 atau 5433) sedang dipakai aplikasi lain di Mac.
+                </div>
+                <p class="step-description">
+                    Solusinya: <strong>Gunakan Port Lain</strong>. Terus naikkan angkanya (misal ke 5434) sampai berhasil.
+                </p>
+                <ol style="margin-left: 20px; color: #444;">
+                    <li>Edit <code>docker-compose.yml</code>: ubah ports menjadi <code>"5434:5432"</code> (atau angka lain yang kosong).</li>
+                    <li>Matikan & Nyalakan ulang: 
+                        <pre style="background:#eee; padding:5px; margin-top:5px; border-radius: 4px;">docker compose down && docker compose up -d</pre>
+                    </li>
+                    <li>Di DBeaver, jangan lupa ubah setting Port koneksi menjadi <strong>5434</strong>.</li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Bagian dari Dokumentasi Belajar Docker</p>
+        <div style="margin: 25px 0;">
+            <a href="https://saweria.co/naufalnabila" target="_blank" class="btn-saweria">
+                <span>💛</span> Dukung via Saweria
+            </a>
+        </div>
+        <p style="font-size: 0.85rem; opacity: 0.7;">&copy; 2025 PembelajarBelajar</p>
+    </footer>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
+        <img id="lightbox-img" src="" alt="Full Screen">
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
