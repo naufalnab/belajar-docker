@@ -11,19 +11,22 @@ services:
       - odoo-db-data:/var/lib/postgresql/data
     restart: always
     ports:
-      - "5434:5432"
+      - "5434:5432" # Akses dari DBeaver via port 5434
 
-  # --- 2. Odoo 17 ---
+  # --- 2. Odoo 17 Enterprise + Custom ---
   odoo:
-    image: odoo:17.0
+    build: .  
     container_name: odoo_app_17
     depends_on:
       - db
     ports:
-      - "8069:8069" # Akses di localhost:8069
+      - "8069:8069"
     volumes:
+      # ... volumes tetap sama ...
       - odoo-web-data:/var/lib/odoo
-      - ./odoo-addons:/mnt/extra-addons # Folder lokalmu terhubung ke sini
+      - ./config/odoo.conf:/etc/odoo/odoo.conf
+      - /Users/mac/PycharmProjects/alamui/enterprise17:/mnt/enterprise-addons
+      - /Users/mac/PycharmProjects/alamui/alamui_addons:/mnt/extra-addons
     environment:
       - HOST=db
       - USER=odoo
@@ -35,12 +38,12 @@ services:
     image: php:8.2-apache
     container_name: php_web_dev
     ports:
-      - "8080:80" # Akses di localhost:8080 (Beda port supaya tidak bentrok)
+      - "8080:80"
     volumes:
-      - ./web-project:/var/www/html # Live edit: Ubah file di Mac, berubah di container
+      - ./web-project:/var/www/html
     restart: always
 
-# Volume untuk menyimpan data database agar tidak hilang saat restart
+# Volume persisten
 volumes:
   odoo-web-data:
   odoo-db-data:

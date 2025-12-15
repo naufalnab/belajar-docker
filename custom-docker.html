@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install Library Python Tambahan - Belajar Docker</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Custom Docker Image</h1>
+        <p>Cara menginstall library Python tambahan (seperti Pandas, NumPy) ke dalam container Odoo.</p>
+        <a href="index.html" style="color: white; text-decoration: underline;">← Kembali ke Home</a>
+    </header>
+
+    <div class="container">
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <div class="step-title">Masalah: Module Not Found</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Docker container adalah lingkungan yang terisolasi. Library yang ada di laptop kita (via <code>venv</code>) <strong>tidak terbaca</strong> oleh Docker. Jika modul custom kita butuh library seperti <code>pandas</code>, Odoo akan crash.
+                </p>
+                <div class="alert-box" style="background: #f8d7da; color: #721c24; padding:10px; border-radius:5px; border: 1px solid #f5c6cb;">
+                    Error: ModuleNotFoundError: No module named 'pandas'
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <div class="step-title">Solusi: Buat Dockerfile</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Kita perlu membuat "Resep Custom" dengan file bernama <code>Dockerfile</code>. File ini akan mengambil Odoo standar lalu menambahkan bumbu (library) yang kita mau.
+                </p>
+                <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 8px; font-family: monospace; overflow-x: auto;"><code># Dockerfile
+FROM odoo:17.0
+
+# Pindah ke user root untuk izin install
+USER root
+
+# Install library yang dibutuhkan
+RUN pip3 install pandas openpyxl requests
+
+# Kembalikan ke user odoo (Wajib)
+USER odoo</code></pre>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <div class="step-title">Update Docker Compose</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Ubah file <code>docker-compose.yml</code> agar menggunakan Dockerfile kita, bukan image standar.
+                </p>
+                <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 8px; font-family: monospace; overflow-x: auto;"><code>services:
+  odoo:
+    # Ganti 'image: odoo:17.0' menjadi:
+    build: .
+    ...</code></pre>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <div class="step-title">Build Ulang</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Jalankan perintah berikut untuk membangun ulang container dengan library baru:
+                </p>
+                <pre style="background: #eee; padding: 10px; border-radius: 5px;"><code>docker compose up -d --build</code></pre>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Bagian dari Dokumentasi Belajar Docker</p>
+        <div style="margin: 25px 0;">
+            <a href="https://saweria.co/naufalnabila" target="_blank" class="btn-saweria">
+                <span>💛</span> Dukung via Saweria
+            </a>
+        </div>
+        <p style="font-size: 0.85rem; opacity: 0.7;">&copy; 2025 PembelajarBelajar</p>
+    </footer>
+    
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
