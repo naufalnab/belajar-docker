@@ -10,6 +10,8 @@ services:
     volumes:
       - odoo-db-data:/var/lib/postgresql/data
     restart: always
+    ports:
+      - "5434:5432"
 
   # --- 2. Odoo 17 ---
   odoo:
