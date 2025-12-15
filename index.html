@@ -214,29 +214,47 @@ volumes:
       <div class="step-card">
         <div class="step-header">
           <div class="step-number">7</div>
-          <div class="step-title">Eksekusi: Docker Compose Up</div>
+          <div class="step-title">Membuat File Percobaan PHP</div>
         </div>
         <div class="step-content">
           <p class="step-description">
-            Buka terminal di folder proyek, lalu ketik perintah
-            <code>docker compose up -d</code>. Docker akan mulai
-            <strong>menarik (pulling)</strong> bahan-bahan (images) dari
-            internet. Proses ini butuh koneksi internet karena ukuran totalnya
-            cukup besar (Odoo + DB + PHP).
+            Buat folder <code>web-project</code>, lalu di dalamnya buat file
+            <code>index.php</code>. Masukkan kode berikut untuk mengetes apakah
+            server PHP berfungsi dan menampilkan versi PHP yang terinstal.
           </p>
-          <div class="screenshot-container" onclick="openLightbox(this)">
-            <img
-              src="assets/images/docker-terminal-pull.png"
-              alt="Terminal Docker Pulling"
-              onerror="this.style.opacity='0'"
-            />
-          </div>
-          <div class="screenshot-container" onclick="openLightbox(this)">
-            <img
-              src="assets/images/docker-terminal-pull-2.png"
-              alt="Terminal Docker Pulling"
-              onerror="this.style.opacity='0'"
-            />
+          <div style="position: relative">
+            <pre
+              style="
+                background: #2d2d2d;
+                color: #f8f8f2;
+                padding: 20px;
+                border-radius: 8px;
+                overflow-x: auto;
+                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                font-size: 0.85rem;
+                line-height: 1.5;
+                border: 1px solid #444;
+              "
+            ><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;PembelajarBelajar Dev&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background: #f4f6f8; }
+        h1 { color: #0db7ed; }
+        .card { background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="card"&gt;
+        &lt;h1&gt;Halo, Naufal!&lt;/h1&gt;
+        &lt;p&gt;PHP Server berjalan di Docker.&lt;/p&gt;
+        &lt;p&gt;Versi PHP: &lt;?php echo phpversion(); ?&gt;&lt;/p&gt;
+        &lt;hr&gt;
+        &lt;p&gt;&lt;i&gt;Edit file ini di folder 'web-project' dan refresh browser untuk melihat hasil live.&lt;/i&gt;&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
           </div>
         </div>
       </div>
@@ -244,11 +262,41 @@ volumes:
       <div class="step-card">
             <div class="step-header">
                 <div class="step-number">8</div>
+                <div class="step-title">Eksekusi: Docker Compose Up</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Buka terminal di folder proyek, lalu ketik perintah <code>docker compose up -d</code>. Docker akan mulai <strong>menarik (pulling)</strong> bahan-bahan (images) dari internet.
+                </p>
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <img src="assets/images/docker-terminal-pull.png" alt="Terminal Docker Pulling" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">9</div>
+                <div class="step-title">Verifikasi: Container Aktif</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Buka kembali Docker Desktop. Sekarang kamu akan melihat grup <code>docker</code> (atau nama foldermu) yang berisi 3 container: <strong>php-web, db, dan odoo</strong>. Pastikan statusnya Running dengan penggunaan CPU/Memory yang terlihat.
+                </p>
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <img src="assets/images/docker-dashboard-running.png" alt="Dashboard Docker Full Running" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">10</div>
                 <div class="step-title">Hasil: Odoo 17 Berjalan</div>
             </div>
             <div class="step-content">
                 <p class="step-description">
-                    Buka browser dan akses <code>http://localhost:8069</code>. Halaman ini membuktikan bahwa container Odoo berhasil terhubung dengan container PostgreSQL. Kita tinggal mengisi form untuk membuat database baru.
+                    Buka browser dan akses <code>http://localhost:8069</code>. Halaman ini membuktikan bahwa container Odoo berhasil terhubung dengan container PostgreSQL.
                 </p>
                 <div class="screenshot-container" onclick="openLightbox(this)">
                     <img src="assets/images/odoo-running.png" alt="Odoo 17 Running" onerror="this.style.opacity='0'">
@@ -258,12 +306,12 @@ volumes:
 
         <div class="step-card">
             <div class="step-header">
-                <div class="step-number">9</div>
+                <div class="step-number">11</div>
                 <div class="step-title">Hasil: PHP Server (Live Reload)</div>
             </div>
             <div class="step-content">
                 <p class="step-description">
-                    Akses <code>http://localhost:8080</code> untuk melihat website PHP sederhana kita. Karena kita menggunakan fitur <strong>Volumes</strong>, setiap perubahan yang kita simpan di file <code>index.php</code> pada folder komputer kita, akan langsung berubah di sini saat direfresh.
+                    Akses <code>http://localhost:8080</code> untuk melihat website PHP sederhana kita. Karena kita menggunakan fitur <strong>Volumes</strong>, setiap perubahan file di komputer akan langsung tampil di sini.
                 </p>
                 <div class="screenshot-container" onclick="openLightbox(this)">
                     <img src="assets/images/php-running.png" alt="PHP Server Running" onerror="this.style.opacity='0'">
@@ -273,7 +321,21 @@ volumes:
     </div>
 
     <footer>
-      <p>&copy; 2025 PembelajarBelajar - Dokumentasi Pribadi</p>
+      <p>Terima kasih telah membaca dokumentasi perjalanan belajar ini.</p>
+
+      <div style="margin: 25px 0">
+        <a
+          href="https://saweria.co/naufalnabila"
+          target="_blank"
+          class="btn-saweria"
+        >
+          <span>💛</span> Dukung saya
+        </a>
+      </div>
+
+      <p style="font-size: 0.85rem; opacity: 0.7">
+        &copy; 2025 PembelajarBelajar - Dokumentasi Pribadi
+      </p>
     </footer>
 
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
