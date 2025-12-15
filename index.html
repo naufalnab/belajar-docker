@@ -1,110 +1,286 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dokumentasi Instalasi Docker - MacBook Apple Silicon</title>
-    
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
 
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
     <header>
-        <h1>Instalasi Docker</h1>
-        <p>Panduan langkah demi langkah menginstal Docker Desktop pada MacBook (Apple Silicon) untuk environment development yang rapi.</p>
+      <h1>Instalasi Docker</h1>
+      <p>
+        Panduan langkah demi langkah menginstal Docker Desktop pada MacBook
+        (Apple Silicon) untuk environment development yang rapi.
+      </p>
     </header>
 
     <div class="container">
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <div class="step-title">Download Installer</div>
+        </div>
+        <div class="step-content">
+          <p class="step-description">
+            Kunjungi website resmi
+            <a
+              href="https://www.docker.com/"
+              target="_blank"
+              class="link-highlight"
+              >Docker.com</a
+            >. Pastikan memilih opsi
+            <strong>"Download for Mac - Apple Silicon"</strong> karena saya
+            menggunakan chip M1/M2/M3 pada MacBook saya.
+          </p>
+          <div class="screenshot-container" onclick="openLightbox(this)">
+            <span class="placeholder-text"
+              >Screenshot Website Docker (Klik untuk zoom)</span
+            >
+            <img
+              src="assets/images/docker-download-page.png"
+              alt="Halaman Download Docker"
+              onerror="this.style.opacity='0'"
+            />
+          </div>
+        </div>
+      </div>
 
-        <div class="step-card">
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <div class="step-title">Jalankan File .dmg</div>
+        </div>
+        <div class="step-content">
+          <p class="step-description">
+            Setelah unduhan selesai, cari file <code>Docker.dmg</code> di folder
+            Downloads dan lakukan <strong>Double-click</strong> untuk
+            membukanya.
+          </p>
+          <div class="screenshot-container" onclick="openLightbox(this)">
+            <img
+              src="assets/images/docker-dmg-file.png"
+              alt="File DMG Docker"
+              onerror="this.style.opacity='0'"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">3</div>
+          <div class="step-title">Instalasi ke Applications</div>
+        </div>
+        <div class="step-content">
+          <p class="step-description">
+            Jendela instalasi akan muncul. <strong>Seret (Drag)</strong> ikon
+            Docker (si paus biru) ke arah folder Applications. Tunggu proses
+            penyalinan selesai.
+          </p>
+          <div class="screenshot-container" onclick="openLightbox(this)">
+            <img
+              src="assets/images/docker-drag-install.png"
+              alt="Drag ke Applications"
+              onerror="this.style.opacity='0'"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">4</div>
+          <div class="step-title">Jalankan via Spotlight Search</div>
+        </div>
+        <div class="step-content">
+          <p class="step-description">
+            Gunakan pintasan keyboard <code>Cmd + Spasi</code> untuk membuka
+            Spotlight Search, ketik <strong>"Docker"</strong>, lalu tekan Enter
+            untuk menjalankan aplikasinya.
+          </p>
+          <div class="screenshot-container" onclick="openLightbox(this)">
+            <img
+              src="assets/images/docker-spotlight-search.png"
+              alt="Spotlight Search Docker"
+              onerror="this.style.opacity='0'"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">5</div>
+          <div class="step-title">Instalasi Berhasil (Dashboard)</div>
+        </div>
+        <div class="step-content">
+          <p class="step-description">
+            Jika Docker berhasil dibuka, kamu akan melihat halaman Dashboard
+            kosong dengan status <strong>"Engine running"</strong> di pojok kiri
+            bawah. Ini tandanya "Dapur" kita sudah siap, tapi belum ada
+            "Masakan" (Container) yang dimasak.
+          </p>
+          <div class="screenshot-container" onclick="openLightbox(this)">
+            <img
+              src="assets/images/docker-dashboard-empty.png"
+              alt="Dashboard Docker Kosong"
+              onerror="this.style.opacity='0'"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">6</div>
+          <div class="step-title">Menyiapkan Resep (Docker Compose)</div>
+        </div>
+        <div class="step-content">
+          <p class="step-description">
+            Buat file bernama <code>docker-compose.yml</code> di dalam folder
+            proyek. File ini berisi konfigurasi lengkap untuk Odoo 17, Database
+            PostgreSQL, dan PHP Server agar bisa berjalan bersamaan.
+          </p>
+
+          <div style="position: relative">
+            <pre
+              style="
+                background: #2d2d2d;
+                color: #f8f8f2;
+                padding: 20px;
+                border-radius: 8px;
+                overflow-x: auto;
+                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                font-size: 0.85rem;
+                line-height: 1.5;
+                border: 1px solid #444;
+              "
+            ><code>services:
+  # --- 1. Database untuk Odoo (PostgreSQL) ---
+  db:
+    image: postgres:15
+    container_name: odoo_db_17
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+    restart: always
+
+  # --- 2. Odoo 17 ---
+  odoo:
+    image: odoo:17.0
+    container_name: odoo_app_17
+    depends_on:
+      - db
+    ports:
+      - "8069:8069" # Akses di localhost:8069
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./odoo-addons:/mnt/extra-addons
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+    restart: always
+
+  # --- 3. Web Server (PHP 8.2 + Apache) ---
+  php-web:
+    image: php:8.2-apache
+    container_name: php_web_dev
+    ports:
+      - "8080:80" # Akses di localhost:8080
+    volumes:
+      - ./web-project:/var/www/html
+    restart: always
+
+# Volume persisten agar data tidak hilang saat restart
+volumes:
+  odoo-web-data:
+  odoo-db-data:</code></pre>
+          </div>
+          <p style="margin-top: 10px; font-size: 0.9rem; color: #666">
+            <em
+              >Catatan: Pastikan struktur spasi/indentasi sesuai karena YAML
+              sangat sensitif terhadap spasi.</em
+            >
+          </p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-header">
+          <div class="step-number">7</div>
+          <div class="step-title">Eksekusi: Docker Compose Up</div>
+        </div>
+        <div class="step-content">
+          <p class="step-description">
+            Buka terminal di folder proyek, lalu ketik perintah
+            <code>docker compose up -d</code>. Docker akan mulai
+            <strong>menarik (pulling)</strong> bahan-bahan (images) dari
+            internet. Proses ini butuh koneksi internet karena ukuran totalnya
+            cukup besar (Odoo + DB + PHP).
+          </p>
+          <div class="screenshot-container" onclick="openLightbox(this)">
+            <img
+              src="assets/images/docker-terminal-pull.png"
+              alt="Terminal Docker Pulling"
+              onerror="this.style.opacity='0'"
+            />
+          </div>
+          <div class="screenshot-container" onclick="openLightbox(this)">
+            <img
+              src="assets/images/docker-terminal-pull-2.png"
+              alt="Terminal Docker Pulling"
+              onerror="this.style.opacity='0'"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="step-card">
             <div class="step-header">
-                <div class="step-number">1</div>
-                <div class="step-title">Download Installer</div>
+                <div class="step-number">8</div>
+                <div class="step-title">Hasil: Odoo 17 Berjalan</div>
             </div>
             <div class="step-content">
                 <p class="step-description">
-                    Kunjungi website resmi <a href="https://www.docker.com/" target="_blank" class="link-highlight">Docker.com</a>. Pastikan memilih opsi <strong>"Download for Mac - Apple Silicon"</strong> karena saya menggunakan chip M1/M2/M3 pada MacBook saya.
+                    Buka browser dan akses <code>http://localhost:8069</code>. Halaman ini membuktikan bahwa container Odoo berhasil terhubung dengan container PostgreSQL. Kita tinggal mengisi form untuk membuat database baru.
                 </p>
                 <div class="screenshot-container" onclick="openLightbox(this)">
-                    <span class="placeholder-text">Screenshot Website Docker (Klik untuk zoom)</span>
-                    <img src="assets/images/docker-download-page.png" alt="Halaman Download Docker" onerror="this.style.opacity='0'">
+                    <img src="assets/images/odoo-running.png" alt="Odoo 17 Running" onerror="this.style.opacity='0'">
                 </div>
             </div>
         </div>
 
         <div class="step-card">
             <div class="step-header">
-                <div class="step-number">2</div>
-                <div class="step-title">Jalankan File .dmg</div>
+                <div class="step-number">9</div>
+                <div class="step-title">Hasil: PHP Server (Live Reload)</div>
             </div>
             <div class="step-content">
                 <p class="step-description">
-                    Setelah unduhan selesai, cari file <code>Docker.dmg</code> di folder Downloads dan lakukan <strong>Double-click</strong> untuk membukanya.
+                    Akses <code>http://localhost:8080</code> untuk melihat website PHP sederhana kita. Karena kita menggunakan fitur <strong>Volumes</strong>, setiap perubahan yang kita simpan di file <code>index.php</code> pada folder komputer kita, akan langsung berubah di sini saat direfresh.
                 </p>
                 <div class="screenshot-container" onclick="openLightbox(this)">
-                    <img src="assets/images/docker-dmg-file.png" alt="File DMG Docker" onerror="this.style.opacity='0'">
+                    <img src="assets/images/php-running.png" alt="PHP Server Running" onerror="this.style.opacity='0'">
                 </div>
             </div>
         </div>
-
-        <div class="step-card">
-            <div class="step-header">
-                <div class="step-number">3</div>
-                <div class="step-title">Instalasi ke Applications</div>
-            </div>
-            <div class="step-content">
-                <p class="step-description">
-                    Jendela instalasi akan muncul. <strong>Seret (Drag)</strong> ikon Docker (si paus biru) ke arah folder Applications. Tunggu proses penyalinan selesai.
-                </p>
-                <div class="screenshot-container" onclick="openLightbox(this)">
-                    <img src="assets/images/docker-drag-install.png" alt="Drag ke Applications" onerror="this.style.opacity='0'">
-                </div>
-            </div>
-        </div>
-
-        <div class="step-card">
-            <div class="step-header">
-                <div class="step-number">4</div>
-                <div class="step-title">Jalankan via Spotlight Search</div>
-            </div>
-            <div class="step-content">
-                <p class="step-description">
-                    Gunakan pintasan keyboard <code>Cmd + Spasi</code> untuk membuka Spotlight Search, ketik <strong>"Docker"</strong>, lalu tekan Enter untuk menjalankan aplikasinya.
-                </p>
-                <div class="screenshot-container" onclick="openLightbox(this)">
-                    <img src="assets/images/docker-spotlight-search.png" alt="Spotlight Search Docker" onerror="this.style.opacity='0'">
-                </div>
-            </div>
-        </div>
-
-        <div class="step-card">
-            <div class="step-header">
-                <div class="step-number">5</div>
-                <div class="step-title">Instalasi Berhasil</div>
-            </div>
-            <div class="step-content">
-                <p class="step-description">
-                    Selamat! Jika berhasil masuk ke tampilan ini, berarti <strong>Docker sudah aktif</strong>. 
-                    Perhatikan indikator hijau <em>"Engine running"</em> di pojok kiri bawah. 
-                    Saat ini daftar container masih kosong, tapi nanti aplikasi Odoo dan PHP kita akan muncul di sini.
-                </p>
-                <div class="screenshot-container" onclick="openLightbox(this)">
-                    <img src="assets/images/docker-dashboard-success.png" alt="Tampilan Dashboard Docker Desktop" onerror="this.style.opacity='0'">
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <footer>
-        <p>&copy; 2025 PembelajarBelajar - Dokumentasi Pribadi</p>
+      <p>&copy; 2025 PembelajarBelajar - Dokumentasi Pribadi</p>
     </footer>
 
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <span class="close-btn">&times;</span>
-        <img id="lightbox-img" src="" alt="Full Screen">
+      <span class="close-btn">&times;</span>
+      <img id="lightbox-img" src="" alt="Full Screen" />
     </div>
 
     <script src="assets/js/script.js"></script>
-</body>
+  </body>
 </html>

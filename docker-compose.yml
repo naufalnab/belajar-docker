@@ -1,0 +1,44 @@
+services:
+  # --- 1. Database untuk Odoo (PostgreSQL) ---
+  db:
+    image: postgres:15
+    container_name: odoo_db_17
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+    restart: always
+
+  # --- 2. Odoo 17 ---
+  odoo:
+    image: odoo:17.0
+    container_name: odoo_app_17
+    depends_on:
+      - db
+    ports:
+      - "8069:8069" # Akses di localhost:8069
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./odoo-addons:/mnt/extra-addons # Folder lokalmu terhubung ke sini
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+    restart: always
+
+  # --- 3. Web Server (PHP 8.2 + Apache) ---
+  php-web:
+    image: php:8.2-apache
+    container_name: php_web_dev
+    ports:
+      - "8080:80" # Akses di localhost:8080 (Beda port supaya tidak bentrok)
+    volumes:
+      - ./web-project:/var/www/html # Live edit: Ubah file di Mac, berubah di container
+    restart: always
+
+# Volume untuk menyimpan data database agar tidak hilang saat restart
+volumes:
+  odoo-web-data:
+  odoo-db-data:
