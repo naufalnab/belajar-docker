@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentasi Instalasi Docker - MacBook Apple Silicon</title>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Instalasi Docker</h1>
+        <p>Panduan langkah demi langkah menginstal Docker Desktop pada MacBook (Apple Silicon) untuk environment development yang rapi.</p>
+    </header>
+
+    <div class="container">
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <div class="step-title">Download Installer</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Kunjungi website resmi <a href="https://www.docker.com/" target="_blank" class="link-highlight">Docker.com</a>. Pastikan memilih opsi <strong>"Download for Mac - Apple Silicon"</strong> karena saya menggunakan chip M1/M2/M3 pada MacBook saya.
+                </p>
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <span class="placeholder-text">Screenshot Website Docker (Klik untuk zoom)</span>
+                    <img src="assets/images/docker-download-page.png" alt="Halaman Download Docker" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <div class="step-title">Jalankan File .dmg</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Setelah unduhan selesai, cari file <code>Docker.dmg</code> di folder Downloads dan lakukan <strong>Double-click</strong> untuk membukanya.
+                </p>
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <img src="assets/images/docker-dmg-file.png" alt="File DMG Docker" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <div class="step-title">Instalasi ke Applications</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Jendela instalasi akan muncul. <strong>Seret (Drag)</strong> ikon Docker (si paus biru) ke arah folder Applications. Tunggu proses penyalinan selesai.
+                </p>
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <img src="assets/images/docker-drag-install.png" alt="Drag ke Applications" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <div class="step-title">Jalankan via Spotlight Search</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Gunakan pintasan keyboard <code>Cmd + Spasi</code> untuk membuka Spotlight Search, ketik <strong>"Docker"</strong>, lalu tekan Enter untuk menjalankan aplikasinya.
+                </p>
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <img src="assets/images/docker-spotlight-search.png" alt="Spotlight Search Docker" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <div class="step-title">Instalasi Berhasil</div>
+            </div>
+            <div class="step-content">
+                <p class="step-description">
+                    Selamat! Jika berhasil masuk ke tampilan ini, berarti <strong>Docker sudah aktif</strong>. 
+                    Perhatikan indikator hijau <em>"Engine running"</em> di pojok kiri bawah. 
+                    Saat ini daftar container masih kosong, tapi nanti aplikasi Odoo dan PHP kita akan muncul di sini.
+                </p>
+                <div class="screenshot-container" onclick="openLightbox(this)">
+                    <img src="assets/images/docker-dashboard-success.png" alt="Tampilan Dashboard Docker Desktop" onerror="this.style.opacity='0'">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 PembelajarBelajar - Dokumentasi Pribadi</p>
+    </footer>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
+        <img id="lightbox-img" src="" alt="Full Screen">
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

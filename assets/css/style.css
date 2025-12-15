@@ -1,0 +1,192 @@
+/* --- CSS VARIABLES & RESET --- */
+:root {
+    --primary-color: #0db7ed; /* Warna biru Docker */
+    --bg-color: #f4f6f8;
+    --card-bg: #ffffff;
+    --text-main: #333;
+    --text-secondary: #666;
+    --code-bg: #2d2d2d;
+    --code-text: #f8f8f2;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+    padding-bottom: 50px;
+}
+
+/* --- HEADER --- */
+header {
+    background: linear-gradient(135deg, #002c66 0%, #0db7ed 100%);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- CONTAINER & STEPS --- */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.step-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.step-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.step-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.step-number {
+    background-color: var(--primary-color);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.step-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.step-content {
+    padding: 30px;
+}
+
+.step-description {
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+}
+
+.link-highlight {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* --- IMAGE STYLING --- */
+.screenshot-container {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    cursor: zoom-in;
+    position: relative;
+    background-color: #eee;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.screenshot-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.3s;
+}
+
+/* Placeholder text style */
+.placeholder-text {
+    position: absolute;
+    color: #999;
+    font-weight: 500;
+    pointer-events: none;
+}
+
+/* --- LIGHTBOX (MODAL) --- */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* --- FOOTER --- */
+footer {
+    text-align: center;
+    margin-top: 60px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+    header h1 { font-size: 1.8rem; }
+    .step-header { padding: 15px 20px; }
+    .step-content { padding: 20px; }
+}
